@@ -28,9 +28,9 @@ else
 	read -p "Enter a First player name : " PLAYER1
 	read -p "Enter a Second player name : " PLAYER2
 fi
-printf "\n$PLAYER1 play with 0 \n$PLAYER2 play with X \n"
+printf "\n$PLAYER1 play with X \n$PLAYER2 play with 0 \n"
 
-toss=$(( RANDOM%3+1))
+toss=$(( RANDOM%2+1))
 if [ $toss -eq 1 ]
 then
 	printf "\nplay first  $PLAYER1 \n"
@@ -40,15 +40,19 @@ fi
 #  Add position
 function addPosition()
 {
-	
-	if [ $(($toss%2)) -eq 0 ]
-   then
-		matrix[$1,$2]=0
-   else
-      matrix[$1,$2]=X
-   fi
-	winOrTie
-	(( toss++ ))
+	if [[ ${matrix[$1,$2]} == 0 || ${matrix[$1,$2]} == X ]]
+	then
+		printf "This position allready enterd \n"
+	else
+		if [ $(($toss%2)) -eq 0 ]
+   	then
+			matrix[$1,$2]=0
+   	else
+      	matrix[$1,$2]=X
+   	fi
+		winOrTie
+		(( toss++ ))
+	fi
 }
 # win or tie
 function winOrTie(){
@@ -113,7 +117,7 @@ function computer(){
 	elif [[ ${matrix[0,0]} == ${matrix[0,1]} || ${matrix[1,2]} == ${matrix[2,2]} || ${matrix[1,1]} == ${matrix[2,0]} ]]
    then
       addPosition 0 2
-	elif [[ ${matrix[0,0]} == ${matrix[0,2]} || ${matrix[1,1]} == ${matrix[1,2]} ]]
+	elif [[ ${matrix[0,0]} == ${matrix[2,0]} || ${matrix[1,1]} == ${matrix[1,2]} ]]
    then
       addPosition 1 0
 	elif [[ ${matrix[1,0]} == ${matrix[1,2]} || ${matrix[0,1]} == ${matrix[2,1]} || ${matrix[0,0]} == ${matrix[2,2]} || ${matrix[0,2]} == ${matrix[2,0]} ]]
@@ -132,17 +136,15 @@ function computer(){
    then
       addPosition 2 2
 	else 
-		randomposition1=$((RANDOM%3))
-		randomposition2=$((RANDOM%3))
-		while [[ ${matrix[$randomposition1,$randomposition2]} == 0 ||  ${matrix[$randomposition1,$randomposition2]} == x ]]
-		do
+		#randomposition1=0
+		#randomposition2=0
+		#while [[ ${matrix[$randomposition1,$randomposition2]} == 0 || ${matrix[$randomposition1,$randomposition2]} == x ]]
+		#do
 			randomposition1=$((RANDOM%3))
          randomposition2=$((RANDOM%3))
-		done
+		#done
 	   addPosition $randomposition1 $randomposition2
 	fi
-
-
 }
 # Run loop up to win or tie
 while [ $end -ne 0 ]
