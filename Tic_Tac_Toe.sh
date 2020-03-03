@@ -43,6 +43,7 @@ function addPosition()
 	if [[ ${matrix[$1,$2]} == 0 || ${matrix[$1,$2]} == X ]]
 	then
 		printf "This position allready enterd \n"
+		printf "$1 , $2\n"
 	else
 		if [ $(($toss%2)) -eq 0 ]
    	then
@@ -107,37 +108,44 @@ function  board(){
 
 }
 # Computer Logic
-function computer(){
-	if [[ ${matrix[1,0]} == ${matrix[2,0]} || ${matrix[0,1]} == ${matrix[0,2]} || ${matrix[1,1]} == ${matrix[2,2]} ]]
+function computer()
+{
+	if [[ ${matrix[0,0]} == 1 || ${matrix[1,0]} == ${matrix[2,0]} && ${matrix[0,0]} != X && ${matrix[0,0]} != 0 || ${matrix[0,1]} == ${matrix[0,2]} && ${matrix[0,0]} != X && ${matrix[0,0]} != 0 || ${matrix[1,1]} == ${matrix[2,2]} && ${matrix[0,0]} != X && ${matrix[0,0]} != 0 ]]
 	then
 		addPosition 0 0
-	elif [[ ${matrix[0,0]} == ${matrix[0,2]} || ${matrix[1,1]} == ${matrix[2,1]} ]]
+	elif [[ ${matrix[0,0]} == ${matrix[0,2]} && ${matrix[0,1]} != X && ${matrix[0,1]} != 0 || ${matrix[1,1]} == ${matrix[2,1]} && ${matrix[0,1]} != X && ${matrix[0,1]} != 0 ]]
 	then
 		addPosition 0 1
-	elif [[ ${matrix[0,0]} == ${matrix[0,1]} || ${matrix[1,2]} == ${matrix[2,2]} || ${matrix[1,1]} == ${matrix[2,0]} ]]
+	elif [[ ${matrix[0,0]} == ${matrix[0,1]} && ${matrix[0,2]} != X && ${matrix[0,2]} != 0 || ${matrix[1,2]} == ${matrix[2,2]} && ${matrix[0,2]} != X && ${matrix[0,2]} != 0 || ${matrix[1,1]} == ${matrix[2,0]} && ${matrix[0,2]} != X && ${matrix[0,2]} != 0 ]]
    then
       addPosition 0 2
-	elif [[ ${matrix[0,0]} == ${matrix[2,0]} || ${matrix[1,1]} == ${matrix[1,2]} ]]
+	elif [[ ${matrix[0,0]} == ${matrix[2,0]} && ${matrix[1,0]} != X && ${matrix[1,0]} != 0 || ${matrix[1,1]} == ${matrix[1,2]} && ${matrix[1,0]} != X && ${matrix[1,0]} != 0 ]]
    then
       addPosition 1 0
-	elif [[ ${matrix[1,0]} == ${matrix[1,2]} || ${matrix[0,1]} == ${matrix[2,1]} || ${matrix[0,0]} == ${matrix[2,2]} || ${matrix[0,2]} == ${matrix[2,0]} ]]
+	elif [[ ${matrix[1,0]} == ${matrix[1,2]} && ${matrix[1,1]} != X && ${matrix[1,1]} != 0 || ${matrix[0,1]} == ${matrix[2,1]} && ${matrix[1,1]} != X && ${matrix[1,1]} != 0 || ${matrix[0,0]} == ${matrix[2,2]} && ${matrix[1,1]} != X && ${matrix[1,1]} != 0 || ${matrix[0,2]} == ${matrix[2,0]} && ${matrix[1,1]} != X && ${matrix[1,1]} != 0 ]]
    then
       addPosition 1 1
-	elif [[ ${matrix[1,0]} == ${matrix[1,1]} || ${matrix[0,2]} == ${matrix[2,2]} ]]
+	elif [[ ${matrix[1,0]} == ${matrix[1,1]} && ${matrix[1,2]} != X && ${matrix[1,2]} != 0 || ${matrix[0,2]} == ${matrix[2,2]} && ${matrix[1,2]} != X && ${matrix[1,2]} != 0 ]]
    then
       addPosition 1 2
-	elif [[ ${matrix[0,0]} == ${matrix[1,0]} || ${matrix[2,1]} == ${matrix[2,2]} || ${matrix[0,2]} == ${matrix[1,1]} ]]
+	elif [[ ${matrix[0,0]} == ${matrix[1,0]} && ${matrix[2,0]} != X && ${matrix[2,0]} != 0 || ${matrix[2,1]} == ${matrix[2,2]} && ${matrix[2,0]} != X && ${matrix[2,0]} != 0 || ${matrix[0,2]} == ${matrix[1,1]} && ${matrix[2,0]} != X && ${matrix[2,0]} != 0 ]]
    then
       addPosition 2 0
-	elif [[ ${matrix[2,0]} == ${matrix[2,2]} || ${matrix[1,1]} == ${matrix[0,1]} ]]
+	elif [[ ${matrix[2,0]} == ${matrix[2,2]} && ${matrix[2,1]} != X && ${matrix[2,1]} != 0 || ${matrix[1,1]} == ${matrix[0,1]} && ${matrix[2,1]} != X && ${matrix[2,1]} != 0 ]]
    then
       addPosition 2 1
-	elif [[ ${matrix[2,0]} == ${matrix[2,1]} || ${matrix[0,2]} == ${matrix[1,2]} || ${matrix[0,0]} == ${matrix[1,1]} ]]
+	elif [[ ${matrix[2,0]} == ${matrix[2,1]} && ${matrix[2,2]} != X && ${matrix[2,2]} != 0 || ${matrix[0,2]} == ${matrix[1,2]} && ${matrix[2,2]} != X && ${matrix[2,1]} != 0 || ${matrix[0,0]} == ${matrix[1,1]} &&${matrix[2,2]} != 0 && ${matrix[2,2]} != X || ${matrix[2,2]} == 9  ]]
    then
       addPosition 2 2
+	elif [[ ${matrix[0,2]} == 3 ]]
+	then
+		addPosition 0 2
+	elif [[ ${matrix[2,0]} == 7 ]]
+   then
+       addPosition 2 0
 	else 
-		#randomposition1=0
-		#randomposition2=0
+		#randomposition1=$((RANDOM%3))
+      #randomposition2=$((RANDOM%3))
 		#while [[ ${matrix[$randomposition1,$randomposition2]} == 0 || ${matrix[$randomposition1,$randomposition2]} == x ]]
 		#do
 			randomposition1=$((RANDOM%3))
