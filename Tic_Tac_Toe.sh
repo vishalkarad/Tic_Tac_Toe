@@ -143,6 +143,9 @@ function computer()
 	elif [[ ${matrix[2,0]} == 7 ]]
    then
        addPosition 2 0
+	elif [[ ${matrix[1,1]} == 5 ]]
+	then
+		addPosition 1 1
 	else 
 		#randomposition1=$((RANDOM%3))
       #randomposition2=$((RANDOM%3))
